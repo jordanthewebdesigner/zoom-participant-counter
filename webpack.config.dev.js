@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const dotenv = require('dotenv')
 const args = process.argv.slice(2);
 let https = false;
 let disableCORP = true;
@@ -46,7 +47,8 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    fallback: { "os": false }
   },
   externals: {
     'babel-polyfill': 'babel-polyfill',
@@ -79,8 +81,8 @@ module.exports = {
         ? 'https://0.0.0.0:9999'
         : 'http://0.0.0.0:9999'
     },
-    open: 'chrome',
-    openPage: https ? 'https://127.0.0.1:9999' : 'http://127.0.0.1:9999'
+    // open: 'chrome',
+    // openPage: https ? 'https://127.0.0.1:9999' : 'http://127.0.0.1:9999'
   },
   mode: 'development',
   plugins: [
@@ -88,6 +90,9 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
       'process.env.BABEL_ENV': JSON.stringify('development'),
-    })
+    }),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(dotenv.config().parsed) // it will automatically pick up key values from .env file
+   })
   ]
 }

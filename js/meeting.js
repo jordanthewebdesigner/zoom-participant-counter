@@ -24,7 +24,7 @@ const meetingConfig = {
   })(),
   passWord: tmpArgs.pwd,
   leaveUrl: "/index.html",
-  role: parseInt(tmpArgs.role, 10),
+  role: 0,
   userEmail: (function () {
     try {
       return testTool.b64DecodeUnicode(tmpArgs.email);
@@ -32,12 +32,10 @@ const meetingConfig = {
       return tmpArgs.email;
     }
   })(),
-  lang: tmpArgs.lang,
-  signature: tmpArgs.signature || "",
-  china: tmpArgs.china === "1",
+  lang: "en-US",
+  signature: tmpArgs.signature || ""
 };
 
-console.log(JSON.stringify(ZoomMtg.checkSystemRequirements()));
 
 // it's option if you want to change the WebSDK dependency link resources. setZoomJSLib must be run at first
 ZoomMtg.preLoadWasm();
@@ -46,15 +44,29 @@ function beginJoin(signature) {
   ZoomMtg.init({
     leaveUrl: meetingConfig.leaveUrl,
     disableCORP: !window.crossOriginIsolated, // default true
-    // disablePreview: false, // default false
+    disablePreview: true,
+    audioPanelAlwaysOpen: true,
+    disableJoinAudio: true,
+    showMeetingHeader: false,
+    disableInvite: true, //optional
+    disableCallOut: true, //optional
+    disableRecord: true,
+    showPureSharingContent: false, //optional
+    isSupportAV: false, //optional,
+    isSupportChat: false, //optional,
+    isSupportQA: false, //optional,
+    isSupportPolling: false, //optional
+    isSupportBreakout: false, //optional
+    isSupportCC: false, //optional,
+    screenShare: false,
+    videoHeader: false, //optional,
+    isLockBottom: false,
     success: function () {
-      console.log(meetingConfig);
-      console.log("signature", signature);
       ZoomMtg.i18n.load(meetingConfig.lang);
       ZoomMtg.i18n.reload(meetingConfig.lang);
       ZoomMtg.join({
         meetingNumber: meetingConfig.meetingNumber,
-        userName: meetingConfig.userName,
+        userName: "Attendant",
         signature: signature,
         apiKey: meetingConfig.apiKey,
         userEmail: meetingConfig.userEmail,
@@ -78,6 +90,7 @@ function beginJoin(signature) {
       console.log(res);
     },
   });
+  
 
   ZoomMtg.inMeetingServiceListener('onUserJoin', function (data) {
     console.log('inMeetingServiceListener onUserJoin', data);

@@ -10,21 +10,16 @@ console.log(JSON.stringify(ZoomMtg.checkSystemRequirements()));
 ZoomMtg.preLoadWasm();
 ZoomMtg.prepareJssdk();
 
-const API_KEY = "YOUR_API_KEY";
+var API_KEY = process.env.API_KEY;
+
 /**
  * NEVER PUT YOUR ACTUAL API SECRET IN CLIENT SIDE CODE, THIS IS JUST FOR QUICK PROTOTYPING
  * The below generateSignature should be done server side as not to expose your api secret in public
- * You can find an eaxmple in here: https://marketplace.zoom.us/docs/sdk/native-sdks/Web-Client-SDK/tutorial/generate-signature
+ * You can find an eaxmple in here: https://marketplace.zoom.us/docs/sdk/native-sdks/web/essential/signature
  */
-const API_SECRET = "YOUR_API_SECRET";
+// var API_SECRET = process.env.API_SECRET;
 
 testTool = window.testTool;
-document.getElementById("display_name").value =
-  "Local" +
-  ZoomMtg.getJSSDKVersion()[0] +
-  testTool.detectOS() +
-  "#" +
-  testTool.getBrowserInfo();
 document.getElementById("meeting_number").value = testTool.getCookie(
   "meeting_number"
 );
@@ -66,15 +61,15 @@ document
     );
   });
 
-document.getElementById("clear_all").addEventListener("click", (e) => {
-  testTool.deleteAllCookies();
-  document.getElementById("display_name").value = "";
-  document.getElementById("meeting_number").value = "";
-  document.getElementById("meeting_pwd").value = "";
-  document.getElementById("meeting_lang").value = "en-US";
-  document.getElementById("meeting_role").value = 0;
-  window.location.href = "/index.html";
-});
+// document.getElementById("clear_all").addEventListener("click", (e) => {
+//   testTool.deleteAllCookies();
+//   document.getElementById("display_name").value = "";
+//   document.getElementById("meeting_number").value = "";
+//   document.getElementById("meeting_pwd").value = "";
+//   document.getElementById("meeting_lang").value = "en-US";
+//   document.getElementById("meeting_role").value = 0;
+//   window.location.href = "/index.html";
+// });
 
 document.getElementById("join_meeting").addEventListener("click", (e) => {
   e.preventDefault();
@@ -87,20 +82,43 @@ document.getElementById("join_meeting").addEventListener("click", (e) => {
   testTool.setCookie("meeting_number", meetingConfig.mn);
   testTool.setCookie("meeting_pwd", meetingConfig.pwd);
 
-  const signature = ZoomMtg.generateSignature({
-    meetingNumber: meetingConfig.mn,
-    apiKey: API_KEY,
-    apiSecret: API_SECRET,
-    role: meetingConfig.role,
-    success: function (res) {
-      console.log(res.result);
-      meetingConfig.signature = res.result;
-      meetingConfig.apiKey = API_KEY;
-      const joinUrl = "/meeting.html?" + testTool.serialize(meetingConfig);
-      console.log(joinUrl);
-      window.open(joinUrl, "_blank");
+  var settings = {
+    "url": "https://zoom-participant-counter-be.herokuapp.com/",
+    "method": "POST",
+    "timeout": 0,
+    "headers": {
+      "Content-Type": "application/json"
     },
+    "data": JSON.stringify({
+      "meetingNumber": meetingConfig.mn,
+      "role": 0
+    }),
+  };
+  
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+    // console.log(res.result);
+    meetingConfig.signature = response.signature;
+    meetingConfig.apiKey = API_KEY;
+    const joinUrl = "/meeting.html?" + testTool.serialize(meetingConfig);
+    console.log(joinUrl);
+    window.open(joinUrl, "_self");
   });
+
+  // const signature = ZoomMtg.generateSignature({
+  //   meetingNumber: meetingConfig.mn,
+  //   apiKey: API_KEY,
+  //   apiSecret: API_SECRET,
+  //   role: 0,
+  //   success: function (res) {
+  //     console.log(res.result);
+  //     meetingConfig.signature = res.result;
+  //     meetingConfig.apiKey = API_KEY;
+  //     const joinUrl = "/meeting.html?" + testTool.serialize(meetingConfig);
+  //     console.log(joinUrl);
+  //     window.open(joinUrl, "_self");
+  //   },
+  // });
 });
 
 function copyToClipboard(elementId) {
@@ -112,7 +130,7 @@ function copyToClipboard(elementId) {
   document.body.removeChild(aux);
 }
 
-// click copy jon link button
+// click copy join link button
 window.copyJoinLink = function (element) {
   const meetingConfig = testTool.getMeetingConfig();
   if (!meetingConfig.mn || !meetingConfig.name) {
