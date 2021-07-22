@@ -1,6 +1,7 @@
 {
-    "root": "build/",
+    // "root": "build/",
     "routes": {
-      "/*.html": "index.html"
+        "/**": "index.html",
+        "*": "index.html"
     }
   }
