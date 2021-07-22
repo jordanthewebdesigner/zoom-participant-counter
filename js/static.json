@@ -1,4 +1,5 @@
 {
+    "root": "build/",
     "routes": {
       "/*.html": "index.html"
     }
