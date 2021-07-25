@@ -1,8 +1,4 @@
 import { ZoomMtg } from "@zoomus/websdk";
-import runtimeEnv from '@mars/heroku-js-runtime-env';
-
-// Load the env object.
-const env = runtimeEnv();
 const testTool = window.testTool;
 // get meeting args from url
 const tmpArgs = testTool.parseQuery();
@@ -72,7 +68,7 @@ function beginJoin(signature) {
         meetingNumber: meetingConfig.meetingNumber,
         userName: "Attendant",
         signature: signature,
-        apiKey: env.REACT_APP_API_KEY,
+        apiKey: meetingConfig.apiKey,
         userEmail: meetingConfig.userEmail,
         passWord: meetingConfig.passWord,
         success: function (res) {
@@ -96,21 +92,21 @@ function beginJoin(signature) {
   });
   
 
-  // ZoomMtg.inMeetingServiceListener('onUserJoin', function (data) {
-  //   console.log('inMeetingServiceListener onUserJoin', data);
-  // });
+  ZoomMtg.inMeetingServiceListener('onUserJoin', function (data) {
+    console.log('inMeetingServiceListener onUserJoin', data);
+  });
 
-  // ZoomMtg.inMeetingServiceListener('onUserLeave', function (data) {
-  //   console.log('inMeetingServiceListener onUserLeave', data);
-  // });
+  ZoomMtg.inMeetingServiceListener('onUserLeave', function (data) {
+    console.log('inMeetingServiceListener onUserLeave', data);
+  });
 
-  // ZoomMtg.inMeetingServiceListener('onUserIsInWaitingRoom', function (data) {
-  //   console.log('inMeetingServiceListener onUserIsInWaitingRoom', data);
-  // });
+  ZoomMtg.inMeetingServiceListener('onUserIsInWaitingRoom', function (data) {
+    console.log('inMeetingServiceListener onUserIsInWaitingRoom', data);
+  });
 
-  // ZoomMtg.inMeetingServiceListener('onMeetingStatus', function (data) {
-  //   console.log('inMeetingServiceListener onMeetingStatus', data);
-  // });
+  ZoomMtg.inMeetingServiceListener('onMeetingStatus', function (data) {
+    console.log('inMeetingServiceListener onMeetingStatus', data);
+  });
   
 }
 
