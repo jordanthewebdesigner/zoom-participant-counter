@@ -92,21 +92,21 @@ function beginJoin(signature) {
   });
   
 
-  ZoomMtg.inMeetingServiceListener('onUserJoin', function (data) {
-    console.log('inMeetingServiceListener onUserJoin', data);
-  });
+  // ZoomMtg.inMeetingServiceListener('onUserJoin', function (data) {
+  //   console.log('inMeetingServiceListener onUserJoin', data);
+  // });
 
-  ZoomMtg.inMeetingServiceListener('onUserLeave', function (data) {
-    console.log('inMeetingServiceListener onUserLeave', data);
-  });
+  // ZoomMtg.inMeetingServiceListener('onUserLeave', function (data) {
+  //   console.log('inMeetingServiceListener onUserLeave', data);
+  // });
 
-  ZoomMtg.inMeetingServiceListener('onUserIsInWaitingRoom', function (data) {
-    console.log('inMeetingServiceListener onUserIsInWaitingRoom', data);
-  });
+  // ZoomMtg.inMeetingServiceListener('onUserIsInWaitingRoom', function (data) {
+  //   console.log('inMeetingServiceListener onUserIsInWaitingRoom', data);
+  // });
 
-  ZoomMtg.inMeetingServiceListener('onMeetingStatus', function (data) {
-    console.log('inMeetingServiceListener onMeetingStatus', data);
-  });
+  // ZoomMtg.inMeetingServiceListener('onMeetingStatus', function (data) {
+  //   console.log('inMeetingServiceListener onMeetingStatus', data);
+  // });
   
 }
 
