@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Zoom Participant Counter</title>
+    <meta charset="utf-8" />
+    <link type="text/css" rel="stylesheet" href="node_modules/@zoomus/websdk/dist/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="node_modules/@zoomus/websdk/dist/css/react-select.css" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="origin-trial" content="">
+    <link type="text/css" rel="stylesheet" href="zoomDiv.css" />
+</head>
+
+<body>
+    <nav id="nav-tool" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Zoom Participant Counter</a>
+            </div>
+                
+                <div class="navbar-right navbar-form" id="meeting_form">
+                    <span class="pull-left" style=" margin: 5px 10px;
+                    color: #f3f3ec;" id="current-count-label">Current count:</span>
+                    <span class="pull-left" id="current-count" style=" margin: 5px 20px 5px 0px;
+                    color: #f3f3ec;"></span>
+                    
+                    <button type="submit" class="btn btn-danger pull-right" onclick='document.querySelector(".footer__leave-btn").click(); document.querySelector(".leave-meeting-options__btn").click()'' id="leave_meeting">Leave Meeting</button>
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-right: 10px;" onclick="addParts()" id="get-count">Get current attandance</button>
+                    <button type="submit" class="btn btn-warning pull-right" style="margin-right: 10px;" onclick='totalParticipants=0;document.querySelector("#current-count").innerText = totalParticipants;'' id="reset-count">Reset Count</button>                    
+                </div>  
+           
+            <!--/.navbar-collapse -->
+        </div>
+    </nav>
+
+    <script src="node_modules/react/umd/react.production.min.js"></script>
+    <script src="node_modules/react-dom/umd/react-dom.production.min.js"></script>
+    <script src="node_modules/redux/dist/redux.min.js"></script>
+    <script src="node_modules/redux-thunk/dist/redux-thunk.min.js"></script>
+    <script src="node_modules/lodash/lodash.min.js"></script>
+    <script src="js/tool.js"></script>
+    <script src="./static/meeting.min.js"></script>
+    <script>
+        const simd = async () => WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 4, 1, 96, 0, 0, 3, 2, 1, 0, 10, 9, 1, 7, 0, 65, 0, 253, 15, 26, 11]))
+        simd().then((res) => {
+          console.log("simd check", res);
+        });
+    </script>
+    <script>
+        
+        let totalParticipants = 0;
+        function addParts(){
+                document.querySelector(".footer-button__participants-icon").click();
+                partList = document.querySelector(".participants-ul").children;
+                document.querySelector(".footer-button__participants-icon").click();
+                for(i=0;i< partList.length; i++){             
+                    var str = partList[i].innerText;
+                    console.log(str);
+                    var result = str.match(/\d{1,2}/);
+                    console.log(result);
+                    let m = parseInt( result);
+                    console.log(m);
+                    if (m >0) {
+                        console.log(m);
+                        totalParticipants += m;
+                    }
+                console.log(totalParticipants);
+                document.querySelector("#current-count").innerText = totalParticipants;
+                
+                }
+        }  
+    </script>
+    <div></div>
+</body>
+
+</html>
