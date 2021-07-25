@@ -6,7 +6,7 @@
   "main": "index.js",
   "homepage": "http://jordanthewebdesigner.github.io/zoom-participant-counter",
   "scripts": {
-    "build": "npm build .",
+    "build": "react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "set NODE_ENV=development && set BABEL_ENV=development && webpack serve --config webpack.config.dev.js",
     "https": "set NODE_ENV=development && set BABEL_ENV=development && webpack serve --config webpack.config.dev.js --https",
@@ -30,6 +30,7 @@
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-redux": "7.1.0",
+    "react-scripts": "^4.0.3",
     "redux": "3.7.2",
     "redux-thunk": "2.2.0"
   },
