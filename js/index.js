@@ -186,7 +186,7 @@ function websdkready() {
       // console.log(res.result);
       meetingConfig.signature = response.signature;
       meetingConfig.apiKey = API_KEY;
-      const joinUrl = "/meeting.html?" + testTool.serialize(meetingConfig);
+      const joinUrl = "/zoom-participant-counter/meeting.html?" + testTool.serialize(meetingConfig);
       console.log(joinUrl);
       window.open(joinUrl, "_self");
     });
