@@ -24,7 +24,7 @@
                     <span class="pull-left" id="current-count" style=" margin: 5px 20px 5px 0px;
                     color: #f3f3ec;"></span>
                     
-                    <button type="submit" class="btn btn-danger pull-right" onclick='document.querySelector(".footer__leave-btn").click(); document.querySelector(".leave-meeting-options__btn").click()'' id="leave_meeting">Leave Meeting</button>
+                    <button type="submit" class="btn btn-danger pull-right" onclick='ZoomMtg.leaveMeeting()' id="leave_meeting">Leave Meeting</button>
                     <button type="submit" class="btn btn-primary pull-right" style="margin-right: 10px;" onclick="addParts()" id="get-count">Get current attandance</button>
                     <button type="submit" class="btn btn-warning pull-right" style="margin-right: 10px;" onclick='totalParticipants=0;document.querySelector("#current-count").innerText = totalParticipants;'' id="reset-count">Reset Count</button>                    
                 </div>  
