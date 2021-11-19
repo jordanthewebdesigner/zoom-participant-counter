@@ -26,7 +26,7 @@
                     
                     <button type="submit" class="btn btn-danger pull-right" onclick='ZoomMtg.leaveMeeting()' id="leave_meeting">Leave Meeting</button>
                     <button type="submit" class="btn btn-primary pull-right" style="margin-right: 10px;" onclick="addParts()" id="get-count">Get current attandance</button>
-                    <button type="submit" class="btn btn-warning pull-right" style="margin-right: 10px;" onclick='totalParticipants=0;document.querySelector("#current-count").innerText = totalParticipants;'' id="reset-count">Reset Count</button>                    
+                    
                 </div>  
            
             <!--/.navbar-collapse -->
@@ -49,8 +49,9 @@
     </script>
     <script>
         
-        let totalParticipants = 0;
         function addParts(){
+                let totalParticipants = 0;
+                document.querySelector("#current-count").innerText = 0;
                 document.querySelector(".footer-button__participants-icon").click();
                 partList = document.querySelector(".participants-ul").children;
                 document.querySelector(".footer-button__participants-icon").click();
