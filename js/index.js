@@ -63,7 +63,7 @@ document.getElementById("join_meeting").addEventListener("click", (e) => {
   testTool.setCookie("meeting_pwd", meetingConfig.pwd);
 
   var settings = {
-    "url": "https://zoom-participant-counter-be.herokuapp.com/",
+    "url": "https://zoom-counter-api.jordanclark.tech/",
     "method": "POST",
     "timeout": 0,
     "headers": {
